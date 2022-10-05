@@ -13,10 +13,10 @@ def parse_dict_to_json_bytes(dictionary: dict) -> Tuple[bytes, int]:
 
 class MimeTypes(Enum):
     # Dynamic HTML files
-    JS = "text/javascript"
-    HTML = "text/html"
+    JS = "text/javascript; charset=UTF-8"
+    HTML = "text/html; charset=UTF-8"
+    CSS = "text/css; charset=UTF-8"
     ICO = "image/vnd.microsoft.icon"
-    CSS = "text/css"
 
     JSON = "application/json"
 
