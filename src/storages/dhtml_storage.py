@@ -37,7 +37,7 @@ class DHTMLFolder:
             self.search_files()
 
     def search_files(self) -> None:
-        for root, dirs, files in os.walk(resources_src, topdown=False):
+        for root, dirs, files in os.walk(self.dir_src, topdown=False):
             for file_name in files:
                 if file_name.endswith(self.dir_name):
                     file_path: str = os.path.join(root, file_name)
@@ -59,7 +59,7 @@ class DHTMLFolder:
 
 
 class DHTMLStorage:
-    __DHTML_FILES: Tuple[str, ...] = ("html", "css", "js", "ico")
+    __DHTML_FILES: Tuple[str, ...] = ("html", "css", "js")
     _RESOURCE_DIR_NAME: str = "resources"
     __slots__ = ("resource_src", "_container")
 
@@ -96,9 +96,3 @@ class DHTMLStorage:
     @property
     def dhtml_files(self) -> Tuple[str, ...]:
         return self.__DHTML_FILES
-
-
-if __name__ == '__main__':
-    resources_src: str = "/mnt/f/GalleryWebApp/resources"
-
-    storage: DHTMLStorage = DHTMLStorage(resources_src)
