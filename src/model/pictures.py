@@ -1,4 +1,5 @@
 from typing import Dict
+from typing import List
 
 
 class Picture:
@@ -13,3 +14,8 @@ class Picture:
             "name": self.name,
             "alt": self.alt
         }
+
+
+class Pictures:
+    def __init__(self) -> None:
+        self.pictures: List[Picture] = []
