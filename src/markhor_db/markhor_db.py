@@ -2,6 +2,7 @@ from json import dumps as json_dumps
 from json import loads as json_loads
 from typing import Any
 from typing import Dict
+from typing import Union
 
 from aiofiles import open as aio_open
 
@@ -43,3 +44,13 @@ class _CRUDOperations:
 
     def get(self, key: str) -> Union[Any, None]:
         return self.__getitem__(key)
+
+    async def load(self) -> None:
+        self._storage = await self._file_handler.load_file()
+
+    async def save(self) -> None:
+        await self._file_handler.save_dict(self._storage)
+
+    async def auto_save(self) -> None:
+        if self._auto_save is True:
+            await self.save()
