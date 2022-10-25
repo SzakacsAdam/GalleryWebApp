@@ -45,6 +45,19 @@ class _CRUDOperations:
     def get(self, key: str) -> Union[Any, None]:
         return self.__getitem__(key)
 
+    async def set(self, key: str, value: Any) -> None:
+        self._storage[key] = value
+        await self.auto_save()
+
+    async def update(self, content: Dict[str, Any]) -> None:
+        self._storage.update(content)
+        await self.auto_save()
+
+    async def rem(self, key: str):
+        content: Any = self._storage.pop(key)
+        await self.auto_save()
+        return content
+
     async def load(self) -> None:
         self._storage = await self._file_handler.load_file()
 
