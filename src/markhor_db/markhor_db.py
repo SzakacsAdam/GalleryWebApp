@@ -57,8 +57,13 @@ class _CRUDOperations:
         self._storage.update(content)
         await self.auto_save()
 
-    async def rem(self, key: str):
+    async def rem(self, key: str) -> Any:
         content: Any = self._storage.pop(key)
+        await self.auto_save()
+        return content
+
+    async def rem_last_inserted(self) -> Dict[str, Any]:
+        content: Dict[str, Any] = dict(self._storage.popitem())
         await self.auto_save()
         return content
 
