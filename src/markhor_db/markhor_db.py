@@ -1,5 +1,8 @@
 from json import dumps as json_dumps
 from json import loads as json_loads
+from os import getcwd
+from os.path import isfile
+from os.path import join
 from typing import Any
 from typing import Dict
 from typing import Tuple
@@ -80,3 +83,18 @@ class _CRUDOperations:
     async def auto_save(self) -> None:
         if self._auto_save is True:
             await self.save()
+
+
+class MarkhorDB:
+    _DB_EXTENSION: str = ".json"
+    __slots__ = ("_db",)
+
+    def __init__(self, src_db: str = None, auto_save: bool = True) -> None:
+        if (
+                src_db is None
+                or not isfile(src_db)
+                or not src_db.lower().endswith(self._DB_EXTENSION)
+        ):
+            src_db = join(getcwd(), self.__class__.__name__,
+                          self._DB_EXTENSION)
+        self._db: _CRUDOperations = _CRUDOperations(src_db, auto_save)
