@@ -28,3 +28,12 @@ class _FileHandling:
         json_data: str = json_dumps(data, ensure_ascii=True, indent=4,
                                     sort_keys=True, encoding="UTF-8")
         await self.save_file(json_data)
+
+
+class _CRUDOperations:
+    __slots__ = ("_file_handler", "_auto_save", "_storage")
+
+    def __init__(self, src: str, auto_save: bool = True) -> None:
+        self._file_handler: _FileHandling = _FileHandling(src)
+        self._auto_save: bool = auto_save
+        self._storage: Dict[str, Any] = {}
