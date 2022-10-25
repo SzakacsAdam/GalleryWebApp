@@ -37,3 +37,9 @@ class _CRUDOperations:
         self._file_handler: _FileHandling = _FileHandling(src)
         self._auto_save: bool = auto_save
         self._storage: Dict[str, Any] = {}
+
+    def __getitem__(self, key: str) -> Union[Any, None]:
+        return self._storage.get(key, None)
+
+    def get(self, key: str) -> Union[Any, None]:
+        return self.__getitem__(key)
