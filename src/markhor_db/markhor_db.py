@@ -3,12 +3,14 @@ from json import loads as json_loads
 from os import getcwd
 from os.path import isfile
 from os.path import join
-from typing import Any
+from typing import Any, List
 from typing import Dict
 from typing import Tuple
 from typing import Union
 
 from aiofiles import open as aio_open
+
+from src.model.pictures import Pictures, Picture
 
 
 class _FileHandling:
@@ -107,3 +109,14 @@ class MarkhorDB:
 
     async def save_db(self) -> None:
         await self._db.save()
+
+    async def save_pictures(self, pictures: Pictures) -> None:
+        content: Dict[str, Any] = pictures.to_dict()
+        await self._db.update(content)
+
+    def get_pictures(self) -> Pictures:
+        pictures: List[Picture] = [
+            Picture(**picture)
+            for picture in self._db.get("Pictures")
+        ]
+        return Pictures(pictures)

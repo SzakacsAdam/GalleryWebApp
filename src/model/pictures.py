@@ -29,8 +29,8 @@ class Picture:
 
 
 class Pictures:
-    def __init__(self) -> None:
-        self.pictures: List[Picture] = []
+    def __init__(self, pictures: List[Picture] = []) -> None:
+        self.pictures: List[Picture] = pictures
 
     def add_picture(self, picture: Picture) -> None:
         self.pictures.append(picture)
@@ -47,3 +47,11 @@ class Pictures:
                 picture.name = name
                 picture.alt = alt
                 break
+
+    def to_dict(self) -> Dict[str, List[Dict[str, str]]]:
+        key: str = self.__class__.__name__
+        val: List[Dict[str, str]] = [
+            picture.to_dict()
+            for picture in self.pictures
+        ]
+        return {key: val}
