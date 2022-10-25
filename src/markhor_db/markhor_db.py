@@ -52,6 +52,9 @@ class _CRUDOperations:
     def keys(self) -> Tuple[str, ...]:
         return tuple(self._storage.keys())
 
+    def has_key(self, key: str) -> bool:
+        return key in self._storage
+
     async def set(self, key: str, value: Any) -> None:
         self._storage[key] = value
         await self.auto_save()
