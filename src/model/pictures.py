@@ -34,3 +34,16 @@ class Pictures:
 
     def add_picture(self, picture: Picture) -> None:
         self.pictures.append(picture)
+
+    def rem_picture(self, picture: Picture) -> None:
+        self.pictures.remove(picture)
+
+    def update_picture(self, name: str, alt: str) -> None:
+        for picture in self.pictures:
+            if (
+                    picture.name == name or
+                    picture.alt == alt
+            ):
+                picture.name = name
+                picture.alt = alt
+                break
