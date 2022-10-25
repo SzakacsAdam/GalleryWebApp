@@ -86,15 +86,21 @@ class _CRUDOperations:
 
 
 class MarkhorDB:
-    _DB_EXTENSION: str = ".json"
+    _DB_EXT: str = "json"
     __slots__ = ("_db",)
 
     def __init__(self, src_db: str = None, auto_save: bool = True) -> None:
         if (
                 src_db is None
                 or not isfile(src_db)
-                or not src_db.lower().endswith(self._DB_EXTENSION)
+                or not src_db.lower().endswith(self._DB_EXT)
         ):
-            src_db = join(getcwd(), self.__class__.__name__,
-                          self._DB_EXTENSION)
+            db_file_name: str = f"{self.__class__.__name__}.{self._DB_EXT}"
+            src_db = join(getcwd(), db_file_name)
         self._db: _CRUDOperations = _CRUDOperations(src_db, auto_save)
+
+    async def load_db(self) -> None:
+        await self._db.load()
+
+    async def save_db(self) -> None:
+        await self._db.save()
