@@ -2,6 +2,7 @@ from json import dumps as json_dumps
 from json import loads as json_loads
 from typing import Any
 from typing import Dict
+from typing import Tuple
 from typing import Union
 
 from aiofiles import open as aio_open
@@ -45,6 +46,9 @@ class _CRUDOperations:
     def get(self, key: str) -> Union[Any, None]:
         return self.__getitem__(key)
 
+    def keys(self) -> Tuple[str, ...]:
+        return tuple(self._storage.keys())
+
     async def set(self, key: str, value: Any) -> None:
         self._storage[key] = value
         await self.auto_save()
@@ -57,6 +61,10 @@ class _CRUDOperations:
         content: Any = self._storage.pop(key)
         await self.auto_save()
         return content
+
+    async def clear(self) -> None:
+        self._storage.clear()
+        await self.auto_save()
 
     async def load(self) -> None:
         self._storage = await self._file_handler.load_file()
